@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rabbahsoft.mobile.gpstracker"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:installLocation="internalOnly" >
+
+    <uses-feature android:name="android.hardware.location" android:required="true" />
+    <uses-feature android:name="android.hardware.location.network" android:required="true" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="false" />
+    <uses-feature android:name="android.software.device_admin" android:required="false" />
+    <uses-feature android:name="android.hardware.wifi" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    
+    <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+	<action android:name="android.intent.action.QUICKBOOT_POWEROFF" />	
+    <action android:name="android.intent.action.BOOT_COMPLETED" /> 	
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.BATTERY_STATS" />
+<!-- 	<uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" /> -->
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+<!-- 	<uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES" /> -->
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />	
+	
+	
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="21" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name">
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<receiver android:name=".MyBootReceiver" >
+            <intent-filter >
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />	
+                <action android:name="android.intent.action.BOOT_COMPLETED" /> 	
+                <action android:name="android.intent.action.SCREEN_ON"/>                
+                <action android:name="android.intent.action.USER_PRESENT"/>	                
+            </intent-filter>
+        </receiver>
+        
+        <service
+            android:name=".GpsReadingService"
+            android:process="com.rabbahsoft.mobile.gpstracker.gps_reading_process"
+            android:label="@string/app_name" >
+        </service>
+        
+        <service
+            android:name=".DataTransfertService"
+            android:process="com.rabbahsoft.mobile.gpstracker.data_transfert_process"
+            android:label="@string/app_name" >
+        </service>
+    </application>
+
+</manifest>
